@@ -24,6 +24,9 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-mobileApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = mobileApp/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mobileApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C01EAE902F3CAAD700834A47 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
+		C01EAE912F3CAAD700834A47 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Regular.ttf; sourceTree = "<group>"; };
+		C01EAE922F3CAAD700834A47 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Solid.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -70,6 +73,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C01EAE932F3CAAD700834A47 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* mobileApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -96,6 +100,17 @@
 				5709B34CF0A7D63546082F79 /* Pods-mobileApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C01EAE932F3CAAD700834A47 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C01EAE902F3CAAD700834A47 /* FontAwesome6_Brands.ttf */,
+				C01EAE912F3CAAD700834A47 /* FontAwesome6_Regular.ttf */,
+				C01EAE922F3CAAD700834A47 /* FontAwesome6_Solid.ttf */,
+			);
+			name = Fonts;
+			path = mobileApp/Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

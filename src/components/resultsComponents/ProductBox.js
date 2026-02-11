@@ -1,27 +1,26 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import React, { useState } from 'react'
+import heart1 from '../../images/heart1.png'
+import heart from '../../images/heart.png'
+
 
 const ProductBox = ({ product }) => {
+    const [isFav, setIsFav] = useState(false);
 
 
     return (
         <View style={styles.product}>
             <View>
                 <Image style={styles.images} source={{ uri: product.images[0].imageUrl }} />
-                <TouchableOpacity style={styles.heartButton}>
-                    <Text style={{ fontSize: 20, color: 'red' }}>♥</Text>
-                </TouchableOpacity>
+
             </View>
             <View style={styles.textView}>
                 <Text numberOfLines={1} style={styles.header}  >{product.name.toUpperCase()} </Text>
                 <Text style={styles.price}>{product.price} TL </Text>
-                <FontAwesome6
-                    name="house"
-                    size={30}
-                    color="#000"
-                    iconType="solid" 
-                />
+                <TouchableOpacity onPress={()=>setIsFav(!isFav)} style={styles.heartButton}>
+                {!isFav ? (    <Image style={styles.heart} source={heart1} />):( <Image style={styles.heart} source={heart} />)}
+                </TouchableOpacity>
+
             </View>
         </View>
     )
@@ -55,15 +54,25 @@ const styles = StyleSheet.create({
 
 
     },
+    heart: {
+        width: 20,
+        height: 20,
+        bottom: -1,
+
+
+    }
+    ,
     heartButton: {
         position: 'absolute',
         bottom: 10,
         right: 10,
-        width: 35,
-        height: 35,
+        width: 25,
+        height: 25,
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
         zIndex: 1,
+
+        borderRadius: 20
     }
 })
