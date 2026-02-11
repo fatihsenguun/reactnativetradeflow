@@ -16,31 +16,38 @@ const Search = () => {
         </View>
         <View style={styles.category}>
 
-          <View style={[styles.categoryHeader ]}>
+          <View style={[styles.categoryHeader]}>
 
-            <TouchableOpacity style={[styles.headerBox, activeTab==='MEN'&& styles.activeTab]}>
+            <TouchableOpacity onPress={() => setActiveTab('MEN')} style={[styles.headerBox, activeTab === 'MEN' && styles.activeTab]}>
               <Text style={styles.headerText}>MEN</Text>
             </TouchableOpacity>
 
-             <TouchableOpacity style={styles.headerBox}>
+            <TouchableOpacity onPress={() => setActiveTab('WOMEN')} style={[styles.headerBox, activeTab === 'WOMEN' && styles.activeTab]}>
               <Text style={styles.headerText}>WOMEN</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.categoryBody}>
-
-            <Text style={styles.categoryText}>
-              Clothes
-            </Text>
-            <Text style={styles.categoryText}>
-              Accecories
-            </Text>
-            <Text style={styles.categoryText}>
-              Shoes
-            </Text>
-            <Text style={styles.categoryText}>
-              Sport
-            </Text>
+            <TouchableOpacity>
+              <Text style={styles.categoryText}>
+                Clothes
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.categoryText}>
+                Accecories
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.categoryText}>
+                Shoes
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.categoryText}>
+                Sport
+              </Text>
+            </TouchableOpacity>
 
 
           </View>
@@ -101,7 +108,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    width: '50%'
+    minWidth: '45%',
+    height: 40,
+
+
   },
   headerText: {
     fontSize: 18,
@@ -111,19 +121,17 @@ const styles = StyleSheet.create({
     width: '90%',
     minHeight: 200,
 
-
-
   },
   categoryText: {
     marginTop: 30,
     fontSize: 18,
 
   },
-  activeTab:{
-    borderBottomColor:'black',
-    borderBottomWidth:1,
-    width:''
+  activeTab: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    width: ''
 
-    
+
   }
 })
