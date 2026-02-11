@@ -5,21 +5,17 @@ import Search from '../pages/Search'
 import Cart from '../pages/Cart'
 import Profile from '../pages/Profile'
 import Results from '../pages/Results'
+import HomeStack from './HomeStack'
+import SearchStack from './SearchStack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
+import SearchResults from '../pages/SearchResults'
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function HomeStack() {
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeMain" component={Home} />
-            <Stack.Screen name="Results" component={Results} />
-        </Stack.Navigator>
-    )
-}
 
 
 const Navigator = () => {
@@ -85,23 +81,26 @@ const Navigator = () => {
                     />
                 ),
 
+
             }}>
                 <Tab.Screen
                     name="Home"
-                    component={HomeStack} 
-                    options={{
-                        headerTitle: "",
-                        tabBarIcon: () => null,
-                    }}
-                />
-                <Tab.Screen name="Search" component={Search}
+                    component={HomeStack}
                     options={{
                         headerTitle: "",
                         tabBarIcon: () => null,
 
+                    }}
+                />
+                <Tab.Screen name="Search" component={SearchStack}
+                    options={{
+                        headerTitle: "",
+                        tabBarIcon: () => null,
+
+
                     }} />
                 <Tab.Screen name="Cart" component={Cart}
-                    options={{      
+                    options={{
                         headerTitle: "",
                         tabBarIcon: () => null,
 
@@ -112,13 +111,45 @@ const Navigator = () => {
                         tabBarIcon: () => null,
 
                     }} />
+
+
             </Tab.Navigator>
+
 
         )
     }
     return (
         <NavigationContainer>
-            <Tabs />
+
+            <Stack.Navigator>
+
+
+                <Stack.Screen
+                    name="MainTabs"
+                    component={Tabs}
+                    options={{ headerShown: false }}
+                />
+
+
+                <Stack.Screen
+                    name="SearchResults"
+                    component={SearchResults}
+
+                    options={{
+                        headerShown: true,
+                        title: false,
+                        headerBackTitleVisible: false,
+                        headerBackTitle: "",
+                        headerBackButtonDisplayMode: "minimal",
+
+                        headerTintColor: "#520000",
+                        headerRight: () => (
+                            <View></View>
+                        ),
+                    }}
+                />
+
+            </Stack.Navigator>
         </NavigationContainer>
     )
 }

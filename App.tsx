@@ -1,5 +1,5 @@
 
-import Navigator from './src/components/Navigator'
+import Navigator from './src/navigation/Navigator'
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import Home from './src/pages/Home'
 function App() {
