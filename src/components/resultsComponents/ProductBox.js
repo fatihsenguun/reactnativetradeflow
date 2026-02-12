@@ -1,78 +1,88 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native'
 import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import heart1 from '../../images/heart1.png'
 import heart from '../../images/heart.png'
 
-
 const ProductBox = ({ product }) => {
-    const [isFav, setIsFav] = useState(false);
-
+    const [isFav, setIsFav] = useState(false)
+    const navigation = useNavigation()
 
     return (
-        <View style={styles.product}>
-            <View>
-                <Image style={styles.images} source={{ uri: product.images[0].imageUrl }} />
-
+        <TouchableOpacity
+            style={styles.container}
+            activeOpacity={0.9}
+            onPress={() => navigation.navigate('ProductPage', { product: product })}
+        >
+            <View style={styles.imageWrapper}>
+                <Image style={styles.image} source={{ uri: product.images[0].imageUrl }} />
             </View>
-            <View style={styles.textView}>
-                <Text numberOfLines={1} style={styles.header}  >{product.name.toUpperCase()} </Text>
-                <Text style={styles.price}>{product.price} TL </Text>
-                <TouchableOpacity onPress={()=>setIsFav(!isFav)} style={styles.heartButton}>
-                {!isFav ? (    <Image style={styles.heart} source={heart1} />):( <Image style={styles.heart} source={heart} />)}
+
+            <View style={styles.detailsContainer}>
+                <View style={styles.textWrapper}>
+                    <Text numberOfLines={1} style={styles.productName}>
+                        {product.name.toUpperCase()}
+                    </Text>
+                    <Text style={styles.productPrice}>{product.price} TL</Text>
+                </View>
+
+                <TouchableOpacity onPress={() => setIsFav(!isFav)} style={styles.favButton}>
+                    <Image style={styles.heartIcon} source={isFav ? heart : heart1} />
                 </TouchableOpacity>
-
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
 export default ProductBox
 
 const styles = StyleSheet.create({
-    images: {
+    container: {
+        width: '48%',
+        marginBottom: 30,
+    },
+    imageWrapper: {
         width: '100%',
-        height: 250,
-
+        height: 280,
+        backgroundColor: '#F0F0F0',
+        marginBottom: 12,
     },
-    product: {
-
-        width: '49%',
-        height: 270,
-        marginTop: 35
-
+    image: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
     },
-    header: {
-        fontSize: 16,
+    detailsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        paddingHorizontal: 2,
     },
-    price: {
-        fontSize: 16,
-        fontWeight: '600'
+    textWrapper: {
+        flex: 1,
+        marginRight: 8,
     },
-    textView: {
-        marginHorizontal: 10,
-        marginTop: 5
+    productName: {
+        fontSize: 14,
 
-
+        color: '#1a1a1a',
+        fontFamily: Platform.OS === 'ios' ? 'Didot' : 'serif',
+        letterSpacing: 0.5,
+        marginBottom: 4,
     },
-    heart: {
-        width: 20,
-        height: 20,
-        bottom: -1,
-
-
-    }
-    ,
-    heartButton: {
-        position: 'absolute',
-        bottom: 10,
-        right: 10,
-        width: 25,
-        height: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 5,
-        zIndex: 1,
-
-        borderRadius: 20
+    productPrice: {
+        fontSize: 14,
+        color: '#555',
+        fontFamily: Platform.OS === 'ios' ? 'Didot' : 'serif',
+        fontWeight: '600',
+    },
+    favButton: {
+        paddingTop: 2,
+    },
+    heartIcon: {
+        width: 18,
+        height: 18,
+        resizeMode: 'contain',
+        tintColor: '#1a1a1a',
     }
 })

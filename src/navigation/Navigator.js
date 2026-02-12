@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Image, Animated, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, Animated, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef } from 'react'
+
 import Home from '../pages/Home'
 import Search from '../pages/Search'
 import Cart from '../pages/Cart'
@@ -7,6 +8,7 @@ import Profile from '../pages/Profile'
 import Results from '../pages/Results'
 import HomeStack from './HomeStack'
 import SearchStack from './SearchStack'
+import ProductPage from '../pages/ProductPage'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -67,6 +69,8 @@ const Navigator = () => {
                 tabBarActiveTintColor: "#520000",
                 tabBarLabelStyle: {
                     fontSize: 15,
+                    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+                    fontWeight: '400',
 
                 },
                 headerLeft: () => (
@@ -84,7 +88,7 @@ const Navigator = () => {
 
             }}>
                 <Tab.Screen
-                    name="Home"
+                    name="HOME"
                     component={HomeStack}
                     options={{
                         headerTitle: "",
@@ -92,20 +96,20 @@ const Navigator = () => {
 
                     }}
                 />
-                <Tab.Screen name="Search" component={SearchStack}
+                <Tab.Screen name="SEARCH" component={SearchStack}
                     options={{
                         headerTitle: "",
                         tabBarIcon: () => null,
 
 
                     }} />
-                <Tab.Screen name="Cart" component={Cart}
+                <Tab.Screen name="CART" component={Cart}
                     options={{
                         headerTitle: "",
                         tabBarIcon: () => null,
 
                     }} />
-                <Tab.Screen name="Profile" component={Profile}
+                <Tab.Screen name="PROFILE" component={Profile}
                     options={{
                         headerTitle: "",
                         tabBarIcon: () => null,
@@ -149,10 +153,35 @@ const Navigator = () => {
                     }}
                 />
 
+                <Stack.Screen
+                    name="ProductPage"
+                    component={ProductPage}
+
+                    options={{
+                        headerShown: true,
+                        title: false,
+                        headerBackTitleVisible: false,
+                        headerBackTitle: "",
+                        headerBackButtonDisplayMode: "minimal",
+
+                        headerTintColor: "#520000",
+                        headerRight: () => (
+                            <TouchableOpacity>
+                                <Image style={styles.basket} source={require('../images/shopping-bag.png')} />
+                            </TouchableOpacity>
+                        ),
+                    }}
+                />
+
             </Stack.Navigator>
         </NavigationContainer>
     )
 }
 export default Navigator
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    basket: {
+        width: 30,
+        height: 30
+    }
+})
