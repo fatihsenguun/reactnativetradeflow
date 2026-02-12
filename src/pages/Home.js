@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     mainTitle: {
         fontSize: 32,
-        color: '#1a1a1a',
+        color: "#520000",
         fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
         marginBottom: 20,
         letterSpacing: 1,

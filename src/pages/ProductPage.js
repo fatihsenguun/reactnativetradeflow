@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         resizeMode: 'contain',
-        tintColor: '#1a1a1a'
+        tintColor: "#520000"
     },
     addToCartButton: {
         flex: 1, 

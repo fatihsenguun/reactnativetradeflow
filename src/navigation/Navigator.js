@@ -8,6 +8,7 @@ import Profile from '../pages/Profile'
 import Results from '../pages/Results'
 import HomeStack from './HomeStack'
 import SearchStack from './SearchStack'
+import Favourites from '../pages/Favourites'
 import ProductPage from '../pages/ProductPage'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -68,10 +69,13 @@ const Navigator = () => {
             <Tab.Navigator screenOptions={{
                 tabBarActiveTintColor: "#520000",
                 tabBarLabelStyle: {
-                    fontSize: 15,
+                    fontSize: 14,
                     fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
                     fontWeight: '400',
+                },
 
+                tabBarStyle: {
+                    paddingHorizontal: 15
                 },
                 headerLeft: () => (
                     <Animated.Image
@@ -92,7 +96,9 @@ const Navigator = () => {
                     component={HomeStack}
                     options={{
                         headerTitle: "",
-                        tabBarIcon: () => null,
+                        tabBarIcon: () => {
+                            <Image style={styles.basket} source={require('../images/shopping-bag.png')} />
+                        },
 
                     }}
                 />
@@ -103,6 +109,22 @@ const Navigator = () => {
 
 
                     }} />
+                <Tab.Screen name={" "} component={Favourites}
+                    options={{
+                        headerTitle: "",
+
+                        tabBarIcon: ({ focused, color }) => (
+                            !focused ?
+                                (<Image style={[styles.heart, { tintColor: color }]} source={require('../images/heart23.png')} />) :
+                                (<Image style={[styles.heart, { tintColor: color }]} source={require('../images/heartfill.png')} />)
+                        ),
+                        tabBarIconStyle: {
+                            marginTop: 20,
+                        },
+
+                        tabBarActiveTintColor: "#520000"
+                    }}
+                />
                 <Tab.Screen name="CART" component={Cart}
                     options={{
                         headerTitle: "",
@@ -183,5 +205,9 @@ const styles = StyleSheet.create({
     basket: {
         width: 30,
         height: 30
+    },
+    heart: {
+        width: 20,
+        height: 20
     }
 })

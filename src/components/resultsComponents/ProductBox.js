@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         resizeMode: 'contain',
-        tintColor: '#1a1a1a',
+        tintColor: "#520000",
     }
 })
