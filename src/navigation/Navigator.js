@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Animated, Dimensions, TouchableOpacity, Platform } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 
 import Home from '../pages/Home'
 import Search from '../pages/Search'
@@ -16,11 +16,14 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SearchResults from '../pages/SearchResults'
 
 
+
+
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 
-// ===== TABS BILEŞENINI NAVIGATOR DIŞINA TAŞI =====
+
 const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
     return (
         <Tab.Navigator screenOptions={{
@@ -105,6 +108,12 @@ const Navigator = () => {
     const widthAnim = useRef(new Animated.Value(400)).current;
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
+    const  TabsComponent = useMemo(
+        ()=>()=><Tabs slideAnim={slideAnim} widthAnim={widthAnim} opacityAnim={opacityAnim}/>,
+        [slideAnim, widthAnim ,opacityAnim]
+
+    )
+
     useEffect(() => {
         Animated.timing(opacityAnim, {
             toValue: 1,
@@ -137,6 +146,13 @@ const Navigator = () => {
         return () => clearTimeout(timeout);
     }, [])
 
+    useEffect(()=>{
+
+
+
+
+    },[])
+
     return (
         <NavigationContainer>
 
@@ -144,7 +160,7 @@ const Navigator = () => {
 
                 <Stack.Screen
                     name="MainTabs"
-                    component={() => <Tabs slideAnim={slideAnim} widthAnim={widthAnim} opacityAnim={opacityAnim} />}
+                    component={TabsComponent}
                     options={{ headerShown: false }}
                 />
 

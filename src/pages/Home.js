@@ -1,31 +1,41 @@
 import { Animated, Image, Pressable, ScrollView, StyleSheet, Text, View, Platform, Dimensions } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+import { AnimationContext } from '../context/AnimationContext';
 
 const { width, height } = Dimensions.get('window');
 
 const Home = ({ navigation }) => {
 
-    const slideAnim = useRef(new Animated.ValueXY({ x: 0, y: 100 })).current;
+    const slideAnim = useRef(new Animated.ValueXY({ x: 0, y: 450 })).current;
     const opacityAnim = useRef(new Animated.Value(0)).current;
+    const { hasHomeAnimated, setHasHomeAnimated } = useContext(AnimationContext)
 
     useEffect(() => {
 
-        const timeout = setTimeout(() => {
-            Animated.parallel([
-                Animated.timing(slideAnim, {
-                    toValue: { x: 0, y: 0 },
-                    duration: 1000,
-                    useNativeDriver: false,
+        if (!hasHomeAnimated) {
+            const timeout = setTimeout(() => {
+                Animated.parallel([
+                    Animated.timing(slideAnim, {
+                        toValue: { x: 0, y: 0 },
+                        duration: 1000,
+                        useNativeDriver: false,
 
-                }),
-                Animated.timing(opacityAnim, {
-                    toValue: 1,
-                    duration: 1000,
-                    useNativeDriver: false,
+                    }),
+                    Animated.timing(opacityAnim, {
+                        toValue: 1,
+                        duration: 1000,
+                        useNativeDriver: false,
 
-                })
-            ]).start()
-        }, 500)
+                    })
+                ]).start()
+                setHasHomeAnimated(true)
+            }, 1300)
+        }
+        else {
+
+            slideAnim.setValue({ x: 0, y: 0 })
+            opacityAnim.setValue(1)
+        }
 
     }, [])
 
@@ -42,7 +52,7 @@ const Home = ({ navigation }) => {
                             <Image source={require('../images/men1.png')} style={styles.image} />
                         </View>
 
-                        <Pressable onPress={() =>  navigation.navigate('SearchResults', { categories:["08ad6bed-ac8d-4e20-b835-7b00d960bfea"], header:'MEN' })} style={styles.discoverButton}>
+                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["08ad6bed-ac8d-4e20-b835-7b00d960bfea"], header: 'MEN' })} style={styles.discoverButton}>
                             <Text style={styles.buttonText}>DISCOVER</Text>
                         </Pressable>
                     </View>
@@ -57,7 +67,7 @@ const Home = ({ navigation }) => {
                             <Image source={require('../images/women1.jpeg')} style={styles.image} />
                         </View>
 
-                        <Pressable onPress={() =>   navigation.navigate('SearchResults', { categories:["ee671e9d-124c-4239-adf6-b46d5840e4a7"], header:'WOMEN' })} style={styles.discoverButton}>
+                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["ee671e9d-124c-4239-adf6-b46d5840e4a7"], header: 'WOMEN' })} style={styles.discoverButton}>
                             <Text style={styles.buttonText}>DISCOVER</Text>
                         </Pressable>
 
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     },
     mainTitle: {
         fontSize: 32,
-        color: "#520000",
+        color: "#000000",
         fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
         marginBottom: 20,
         letterSpacing: 1,
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
     discoverButton: {
         width: 160,
         height: 45,
-        backgroundColor: '#1a1a1a',
+        backgroundColor: '#520000',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 2,
