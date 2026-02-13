@@ -38,34 +38,5 @@ This mobile client operates as a head for the headless commerce architecture pro
     * **Axios Interceptors:** Centralized request/response handling, error management, and token injection.
     * **QS (Query String):** Handling complex filtering parameters for search results.
 
-## 🚀 Getting Started
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/yourusername/tradeflow-mobile.git](https://github.com/yourusername/tradeflow-mobile.git)
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
-
-3.  **iOS Configuration (Mac only):**
-    ```bash
-    cd ios && pod install && cd ..
-    ```
-
-4.  **Run the application:**
-    ```bash
-    # Android
-    npx react-native run-android
-
-    # iOS
-    npx react-native run-ios
-    ```
-
-## 📄 License
 
 This project is proprietary software belonging to the TradeFlow Ecosystem.
