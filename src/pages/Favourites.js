@@ -8,7 +8,7 @@ const Favourites = () => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       
-      {/* 1. HEADER (SearchResults ile Birebir Aynı Stil) */}
+
       <View style={styles.headerBox}>
         <Text style={styles.subTitle}>MEMBERSHIP</Text>
         <Text style={styles.mainTitle}>WISHLIST</Text>
@@ -16,10 +16,10 @@ const Favourites = () => {
         <Text style={styles.countText}>0 ITEMS</Text>
       </View>
 
-      {/* 2. İÇERİK (Boş Durum) */}
+
       <View style={styles.centerContainer}>
         
-        {/* Çok hafif, flu bir ikon */}
+
         <Text style={styles.fadedIcon}>♥</Text>
 
         <Text style={styles.messageTitle}>PRIVATE COLLECTION</Text>
@@ -28,7 +28,7 @@ const Favourites = () => {
           Sign in to curate your personal wardrobe and save your favorite pieces.
         </Text>
 
-        {/* Buton yerine zarif bir yazı linki */}
+
         <TouchableOpacity 
           activeOpacity={0.7}
           onPress={() => navigation.navigate('PROFILE')}

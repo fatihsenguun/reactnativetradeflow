@@ -1,86 +1,112 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { act, useState } from 'react'
-import qs from 'qs'
-import axios from 'axios'
-import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, Platform, Image } from 'react-native'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 const Search = () => {
 
   const navigation = useNavigation();
-  const [activeTab, setActiveTab] = useState('MEN')
 
+  const [activeTab, setActiveTab] = useState('GENTLEMEN'); 
+  const [searchText, setSearchText] = useState('');
 
-  const selectCategory = async (active, section) => {
-      let id = ""
-      if (active === 'MEN') {
-        id = "08ad6bed-ac8d-4e20-b835-7b00d960bfea"
+  const selectCategory = (genderTab, categoryId) => {
+
+      let genderId = "";
+      let headerTitle = "";
+
+      if (genderTab === 'GENTLEMEN') {
+          genderId = "08ad6bed-ac8d-4e20-b835-7b00d960bfea"; 
+          headerTitle = "GENTLEMEN"; 
       } else {
-        id = "ee671e9d-124c-4239-adf6-b46d5840e4a7"
+          genderId = "ee671e9d-124c-4239-adf6-b46d5840e4a7"; 
+          headerTitle = "LADIES";
       }
 
-        navigation.navigate('SearchResults', { categories:[id,section], header:active })
-
+      navigation.navigate('SearchResults', { 
+          categories: [genderId, categoryId], 
+          header: headerTitle 
+      });
   }
 
 
+  const CATEGORIES = [
+      { name: "READY TO WEAR", id: "4800fe74-fe7a-4b38-b0f8-6b38474906b8" },
+      { name: "SHOES", id: "c8ed306c-6a52-4b68-9cd2-59659d90e933" },
+      { name: "ACCESSORIES", id: "069dcdcc-7e3e-4dbb-9dbf-60c2b391bc7d" },
+      { name: "ACTIVEWEAR", id: "6a06fa34-6126-48d4-b0a2-8af791eaf49e" },
+  ];
+
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.box}>
-          <TextInput style={styles.input}>
+    <SafeAreaView style={styles.container}>
+      
 
-          </TextInput>
-
+      <View style={styles.headerContainer}>
+        <Text style={styles.pageTitle}></Text>
+        
+        <View style={styles.inputWrapper}>
+            <Image source={require('../images/shopping-bag.png')} style={[styles.searchIcon, { tintColor: '#888' }]} /> 
+            <TextInput 
+                style={styles.input}
+                placeholder="Search collection..."
+                placeholderTextColor="#999"
+                value={searchText}
+                onChangeText={setSearchText}
+                selectionColor="#520000"
+            />
         </View>
-        <View style={styles.category}>
-
-          <View style={[styles.categoryHeader]}>
+      </View>
 
 
-            <TouchableOpacity onPress={() => setActiveTab('MEN')} style={[styles.headerBox, activeTab === 'MEN' && styles.activeTab]}>
-              <Text style={[styles.headerText, activeTab === 'MEN' && styles.activeText]}>MEN</Text>
-            </TouchableOpacity>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity 
+            onPress={() => setActiveTab('LADIES')} 
+            activeOpacity={0.8}
+            style={[styles.tabButton, activeTab === 'LADIES' && styles.activeTabBorder]}
+        >
+            <Text style={[styles.tabText, activeTab === 'LADIES' ? styles.activeTabText : styles.inactiveTabText]}>
+                LADIES
+            </Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => setActiveTab('WOMEN')} style={[styles.headerBox, activeTab === 'WOMEN' && styles.activeTab]}>
-              <Text style={[styles.headerText, activeTab === 'WOMEN' && styles.activeText]}>WOMEN</Text>
-            </TouchableOpacity>
-          </View>
+        <TouchableOpacity 
+            onPress={() => setActiveTab('GENTLEMEN')} 
+            activeOpacity={0.8}
+            style={[styles.tabButton, activeTab === 'GENTLEMEN' && styles.activeTabBorder]}
+        >
+            <Text style={[styles.tabText, activeTab === 'GENTLEMEN' ? styles.activeTabText : styles.inactiveTabText]}>
+                GENTLEMEN
+            </Text>
+        </TouchableOpacity>
+      </View>
 
-          <View style={styles.categoryBody}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        
 
-            <TouchableOpacity onPress={() => selectCategory(activeTab, "4800fe74-fe7a-4b38-b0f8-6b38474906b8")}>
-              <Text style={styles.categoryText}>
-                CLOTHES
-              </Text>
-            </TouchableOpacity>
+        <View style={styles.categoryContainer}>
 
-            <TouchableOpacity onPress={() => selectCategory(activeTab, "069dcdcc-7e3e-4dbb-9dbf-60c2b391bc7d")} >
-              <Text style={styles.categoryText}>
-                ACCECORIES
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => selectCategory(activeTab, "c8ed306c-6a52-4b68-9cd2-59659d90e933")} >
-              <Text style={styles.categoryText}>
-                SHOES
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => selectCategory(activeTab, "6a06fa34-6126-48d4-b0a2-8af791eaf49e")} >
-              <Text style={styles.categoryText}>
-                SPORT
-              </Text>
-            </TouchableOpacity>
-
-
-          </View>
-
-
-
+            
+            {CATEGORIES.map((cat, index) => (
+                <TouchableOpacity 
+                    key={index} 
+                    style={styles.categoryItem}
+                    onPress={() => selectCategory(activeTab, cat.id)}
+                    activeOpacity={0.7}
+                >
+                    <Text style={styles.categoryText}>{cat.name}</Text>
+                    <Text style={styles.arrowText}>→</Text>
+                </TouchableOpacity>
+            ))}
         </View>
+
+        {/* 4. TRENDLER */}
+        <View style={styles.trendingSection}>
+            <Text style={styles.sectionHeader}>TRENDING NOW</Text>
+            <Text style={styles.trendingTag}>#SummerCollection</Text>
+            <Text style={styles.trendingTag}>#Linen</Text>
+        </View>
+
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -89,82 +115,114 @@ export default Search
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-       backgroundColor: '#FCFCF8',
-    alignItems: 'center',
-    justifyContent: 'center',
-
+    backgroundColor: '#FCFCF8',
   },
 
-  scrollView: {
-
-    width: '100%',
-
+  // HEADER & INPUT
+  headerContainer: {
+      paddingHorizontal: 20,
+      paddingTop: 20,
+      paddingBottom: 30,
   },
-
-  box: {
-    marginTop: 30,
-    width: '100%',
-    alignItems: 'center',
-
-    justifyContent: 'center',
-
-
+  pageTitle: {
+      marginBottom: 20,
+  },
+  inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: '#1a1a1a',
+      paddingBottom: 10,
+  },
+  searchIcon: {
+      width: 18,
+      height: 18,
+      marginRight: 10,
+      resizeMode: 'contain',
+      opacity: 0.5
   },
   input: {
-    width: '90%',
-    height: 50,
-    backgroundColor: '#e2dddd',
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    fontSize: 15
+      flex: 1,
+      fontSize: 16,
+      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+      color: '#1a1a1a',
+      letterSpacing: 0.5,
+      padding: 0,
+  },
 
+  // TABLAR (LADIES / GENTLEMEN)
+  tabContainer: {
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderBottomColor: '#eee',
   },
-  category: {
-    width: "100%",
-    minHeight: 500,
-    marginTop: '20',
-    alignItems: 'center'
+  tabButton: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical: 15,
   },
-  categoryHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  activeTabBorder: {
+      borderBottomWidth: 2,
+      borderBottomColor: '#520000', // Bordo Çizgi
   },
-  headerBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    minWidth: '45%',
-    height: 40,
+  tabText: {
+      fontSize: 13, // Biraz küçülttüm, Gentlemen uzun kelime olduğu için sığsın
+      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+      letterSpacing: 2,
+      fontWeight: '600',
+  },
+  activeTabText: {
+      color: '#520000',
+  },
+  inactiveTabText: {
+      color: '#999',
+  },
 
-
+  // KATEGORİ LİSTESİ
+  scrollView: {
+      flex: 1,
   },
-  headerText: {
-    fontSize: 22,
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontWeight: '400',
-    letterSpacing: 2,
+  categoryContainer: {
+      padding: 30,
   },
-  categoryBody: {
-    width: '90%',
-    minHeight: 200,
-
+  sectionHeader: {
+      fontSize: 10,
+      color: '#888',
+      letterSpacing: 3,
+      marginBottom: 25,
+      fontWeight: '600',
+  },
+  categoryItem: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 20,
+      borderBottomWidth: 0.5,
+      borderBottomColor: '#e0e0e0',
   },
   categoryText: {
-    marginTop: 30,
-    fontSize: 19,
-      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif', 
-        fontWeight: '400', 
-
+      fontSize: 16,
+      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+      color: '#1a1a1a',
+      letterSpacing: 1,
+      fontWeight: '400',
   },
-  activeTab: {
-    borderBottomColor: "#520000",
-    borderBottomWidth: 1,
-    width: ''
-
-
+  arrowText: {
+      fontSize: 18,
+      color: '#ccc',
+      fontWeight: '300',
   },
-  activeText: {
-    color: "#520000",
-    fontWeight: '600'
+
+
+  trendingSection: {
+      paddingHorizontal: 30,
+      paddingBottom: 50,
+  },
+  trendingTag: {
+      fontSize: 14,
+      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+      color: '#555',
+      marginBottom: 10,
+      fontStyle: 'italic',
   }
 })

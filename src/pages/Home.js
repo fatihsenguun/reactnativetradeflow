@@ -46,13 +46,13 @@ const Home = ({ navigation }) => {
 
                     <View style={styles.sectionContainer}>
                         <Text style={styles.subTitle}>SS / 2026</Text>
-                        <Text style={styles.mainTitle}>MEN COLLECTION</Text>
+                        <Text style={styles.mainTitle}>GENTLEMEN</Text>
 
                         <View style={styles.imageWrapper}>
                             <Image source={require('../images/men1.png')} style={styles.image} />
                         </View>
 
-                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["08ad6bed-ac8d-4e20-b835-7b00d960bfea"], header: 'MEN' })} style={styles.discoverButton}>
+                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["08ad6bed-ac8d-4e20-b835-7b00d960bfea"], header: 'GENTLEMEN' })} style={styles.discoverButton}>
                             <Text style={styles.buttonText}>DISCOVER</Text>
                         </Pressable>
                     </View>
@@ -61,13 +61,13 @@ const Home = ({ navigation }) => {
 
                     <View style={styles.sectionContainer}>
                         <Text style={styles.subTitle}>NEW ARRIVALS</Text>
-                        <Text style={styles.mainTitle}>WOMEN COLLECTION</Text>
+                        <Text style={styles.mainTitle}>LADIES</Text>
 
                         <View style={styles.imageWrapper}>
                             <Image source={require('../images/women1.jpeg')} style={styles.image} />
                         </View>
 
-                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["ee671e9d-124c-4239-adf6-b46d5840e4a7"], header: 'WOMEN' })} style={styles.discoverButton}>
+                        <Pressable onPress={() => navigation.navigate('SearchResults', { categories: ["ee671e9d-124c-4239-adf6-b46d5840e4a7"], header: 'LADIES' })} style={styles.discoverButton}>
                             <Text style={styles.buttonText}>DISCOVER</Text>
                         </Pressable>
 

@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 const Profile = () => {
+
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       
@@ -21,18 +24,18 @@ const Profile = () => {
         </Text>
 
 
-        <TouchableOpacity style={styles.loginButton} activeOpacity={0.8}>
+        <TouchableOpacity  onPress={() => navigation.navigate('SignIn')} style={styles.loginButton} activeOpacity={0.8}>
           <Text style={styles.loginButtonText}>SIGN IN</Text>
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.registerButton} activeOpacity={0.7}>
+        <TouchableOpacity  onPress={() => navigation.navigate('SignUp')}  style={styles.registerButton} activeOpacity={0.7}>
           <Text style={styles.registerButtonText}>BECOME A MEMBER</Text>
         </TouchableOpacity>
 
       </View>
 
-      {/* 3. ALT BİLGİ (Çok silik) */}
+
       <View style={styles.footer}>
         <TouchableOpacity>
             <Text style={styles.helpText}>Need assistance?</Text>

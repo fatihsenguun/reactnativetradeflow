@@ -52,7 +52,7 @@ const SearchResults = ({ route }) => {
   return (
     <View style={styles.mainContainer}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-        
+
         <View style={styles.headerBox}>
           <Text style={styles.subTitle}>CATALOGUE</Text>
           <Text style={styles.mainTitle}>{header ? header.toUpperCase() : 'COLLECTION'}</Text>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 36,
-    color:  "#520000",
+    color: "#520000",
     fontFamily: Platform.OS === 'ios' ? 'Didot' : 'serif',
     letterSpacing: 1,
     fontWeight: '400',
@@ -153,5 +153,6 @@ const styles = StyleSheet.create({
   noProductDesc: {
     fontSize: 14,
     color: '#888',
+    fontFamily: Platform.OS === 'ios' ? 'Didot' : 'serif',
   }
 })

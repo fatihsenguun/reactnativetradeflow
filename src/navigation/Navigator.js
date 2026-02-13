@@ -8,6 +8,8 @@ import Profile from '../pages/Profile'
 import Results from '../pages/Results'
 import HomeStack from './HomeStack'
 import SearchStack from './SearchStack'
+import SignIn from '../pages/SignIn'
+import SignUp from '../pages/SignUp'
 import Favourites from '../pages/Favourites'
 import ProductPage from '../pages/ProductPage'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -201,6 +203,34 @@ const Navigator = () => {
                                 <Image style={styles.basket} source={require('../images/shopping-bag.png')} />
                             </TouchableOpacity>
                         ),
+                    })}
+                />
+                   <Stack.Screen
+                    name="SignIn"
+                    component={SignIn}
+
+                    options={() => ({
+                        headerShown: true,
+                        title: false,
+                        headerBackTitleVisible: false,
+                        headerBackTitle: "",
+                        headerBackButtonDisplayMode: "minimal",
+                        headerTintColor: "#520000",
+                      
+                    })}
+                />
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+
+                    options={() => ({
+                        headerShown: true,
+                        title: false,
+                        headerBackTitleVisible: false,
+                        headerBackTitle: "",
+                        headerBackButtonDisplayMode: "minimal",
+                        headerTintColor: "#520000",
+                      
                     })}
                 />
 
