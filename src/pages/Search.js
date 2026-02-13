@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, Platform, Image } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Image } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 

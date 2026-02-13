@@ -1,97 +1,81 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# TradeFlow Mobile Client
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+A premium, cross-platform mobile e-commerce application engineered with **React Native**. This project serves as the client-side interface for the **TradeFlow Ecosystem**, delivering a sophisticated "Old Money" aesthetic with high-performance user interactions.
 
-## Step 1: Start Metro
+The application is fully integrated with the **SpringTradeFlow** backend architecture, ensuring real-time data synchronization, secure transaction processing, and dynamic content management controlled directly via the TradeFlow Admin Panel.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📱 UI Showcase
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| Member Access | Collection Home | Discovery & Filter | Catalogue Results | Product Detail |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="Screenshots/SignIn.png" width="180" alt="Screenshots/Sign In Screen"/> | <img src="Screenshots/Home.png" width="180" alt="Screenshots/Home Screen"/> | <img src="Screenshots/Filter.png" width="180" alt="Filter Screen"/> | <img src="Screenshots/SearchResults.png" width="180" alt="Results Screen"/> | <img src="Screenshots/Product.png" width="180" alt="Product Screen"/> |
 
-```sh
-# Using npm
-npm start
+## 🏗 System Architecture & Integration
 
-# OR using Yarn
-yarn start
-```
+This mobile client operates as a head for the headless commerce architecture provided by **SpringTradeFlow**.
 
-## Step 2: Build and run your app
+### Backend Integration (SpringTradeFlow)
+* **Real-Time Data Streaming:** Utilizes optimized RESTful endpoints to fetch catalog data, user profiles, and order history with minimal latency.
+* **Synchronized Inventory:** Stock levels and product availability are updated instantly across the mobile app as changes occur in the warehouse or via the Admin Panel.
+* **Secure Authentication:** Implements JWT-based authentication flows for secure session management and user data protection.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Admin Panel Control
+* **Dynamic Management:** All banners, featured collections (e.g., "Gentlemen/Ladies"), and trending tags visible in the mobile app are configurable in real-time from the Admin Panel.
+* **Order Lifecycle:** Orders placed via the mobile app are immediately reflected in the Admin Dashboard for processing and fulfillment.
 
-### Android
+## 🛠 Technical Stack & Features
 
-```sh
-# Using npm
-npm run android
+### Core Technologies
+* **Framework:** React Native (CLI)
+* **Language:** JavaScript / ES6+
+* **Navigation:** React Navigation (Native Stack & Bottom Tabs) - Custom "Old Money" tab bar implementation.
 
-# OR using Yarn
-yarn android
-```
+### Key Implementations
+* **Context API for Global State:**
+    * `AuthContext`: Manages user sessions, token persistence, and guest/member states.
+    * `FavoritesContext`: Optimistic UI updates for wishlist management, synchronized with the server.
+    * `AnimationContext`: Manages intro sequences and layout transitions to ensure smooth UX.
+* **Optimistic UI:** Instant visual feedback for user actions (e.g., "Add to Wishlist") while processing background API requests.
+* **Advanced Networking:**
+    * **Axios Interceptors:** Centralized request/response handling, error management, and token injection.
+    * **QS (Query String):** Handling complex filtering parameters for search results.
+* **Custom Design System:**
+    * Bespoke components (`ProductBox`, `Button`, `Tabs`) designed to adhere to the strict minimal/luxury design language.
+    * Use of specific typography (Didot / Times New Roman) and color palettes (Cream #FCFCF8, Burgundy #520000).
+* **Performance:**
+    * `FlatList` optimizations for large catalog rendering.
+    * `Animated` API for smooth header transitions and entry animations.
+    * `react-native-safe-area-context` for modern device compatibility.
 
-### iOS
+## 🚀 Getting Started
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/yourusername/tradeflow-mobile.git](https://github.com/yourusername/tradeflow-mobile.git)
+    ```
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-```sh
-bundle install
-```
+3.  **iOS Configuration (Mac only):**
+    ```bash
+    cd ios && pod install && cd ..
+    ```
 
-Then, and every time you update your native dependencies, run:
+4.  **Run the application:**
+    ```bash
+    # Android
+    npx react-native run-android
 
-```sh
-bundle exec pod install
-```
+    # iOS
+    npx react-native run-ios
+    ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 📄 License
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is proprietary software belonging to the TradeFlow Ecosystem.
