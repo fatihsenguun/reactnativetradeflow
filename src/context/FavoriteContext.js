@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from './AuthProvider'
 import axios from "axios";
 const FavoritesContext = createContext();
@@ -81,3 +81,4 @@ export const FavoritesProvider = ({ children }) => {
     )
 
 }
+export const useFav = useContext(FavoritesContext);

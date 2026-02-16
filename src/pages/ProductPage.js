@@ -2,28 +2,43 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-import heart1 from '../images/heart1.png' 
-import heart from '../images/heart.png'   
+import heart1 from '../images/heart1.png'
+import heart from '../images/heart.png'
+import { useAuth } from '../context/AuthProvider'
+import { useFav } from '../context/FavoriteContext'
 
 const { width, height } = Dimensions.get('window');
 
 const ProductPage = ({ route }) => {
+    const navigation = useNavigation();
     const { product } = route.params;
+    const { user } = useAuth();
+    const { toggleFavorite } = useFav();
     const [isFav, setIsFav] = useState(false);
+
+
+    const handleFav = async (productId) => {
+        if (!user) {
+            navigation.navigate('SignIn');
+            return;
+        }
+        toggleFavorite(productId)
+
+    }
 
     return (
         <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 100}}>
-                
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+
                 <View style={styles.imageWrapper}>
-                    <Image 
-                        source={{ uri: product.images[0].imageUrl }} 
-                        style={styles.image} 
+                    <Image
+                        source={{ uri: product.images[0]?.imageUrl }}
+                        style={styles.image}
                     />
                 </View>
 
                 <View style={styles.infoContainer}>
-                    
+
                     <Text style={styles.subHeader}>COLLECTION</Text>
 
                     <Text style={styles.productName}>{product.name.toUpperCase()}</Text>
@@ -40,14 +55,14 @@ const ProductPage = ({ route }) => {
             </ScrollView>
 
             <View style={styles.bottomBar}>
-                
-                <TouchableOpacity 
-                    style={styles.favButton} 
-                    onPress={() => setIsFav(!isFav)}
+
+                <TouchableOpacity
+                    style={styles.favButton}
+                    onPress={() => handleFav(product.id)}
                 >
-                    <Image 
-                        source={isFav ? heart : heart1} 
-                        style={styles.heartIcon} 
+                    <Image
+                        source={isFav ? heart : heart1}
+                        style={styles.heartIcon}
                     />
                 </TouchableOpacity>
 
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
     },
     imageWrapper: {
         width: width,
-        height: height * 0.60, 
+        height: height * 0.60,
         backgroundColor: '#f0f0f0',
     },
     image: {
@@ -79,7 +94,7 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         padding: 24,
-        alignItems: 'center', 
+        alignItems: 'center',
     },
     subHeader: {
         fontSize: 12,
@@ -90,9 +105,9 @@ const styles = StyleSheet.create({
     },
     productName: {
         fontSize: 26,
-        color:"#520000",
-        fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif', 
-        fontWeight: '400', 
+        color: "#520000",
+        fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+        fontWeight: '400',
         textAlign: 'center',
         marginBottom: 8,
         letterSpacing: 1,
@@ -100,11 +115,11 @@ const styles = StyleSheet.create({
     productPrice: {
         fontSize: 18,
         color: '#444',
-        fontWeight: '300', 
+        fontWeight: '300',
         marginBottom: 20,
     },
     divider: {
-        width: 40, 
+        width: 40,
         height: 1,
         backgroundColor: '#ccc',
         marginVertical: 20,
@@ -112,8 +127,8 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 14,
         color: '#555',
-        lineHeight: 24, 
-        textAlign: 'center', 
+        lineHeight: 24,
+        textAlign: 'center',
         paddingHorizontal: 10,
         fontWeight: '300',
     },
@@ -127,19 +142,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        paddingBottom: 20, 
+        paddingBottom: 20,
         borderTopWidth: 1,
-        borderTopColor: '#eee', 
+        borderTopColor: '#eee',
     },
     favButton: {
         width: 50,
         height: 50,
-        borderWidth: 1, 
+        borderWidth: 1,
         borderColor: '#ddd',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,
-        borderRadius: 4, 
+        borderRadius: 4,
     },
     heartIcon: {
         width: 20,
@@ -148,17 +163,17 @@ const styles = StyleSheet.create({
         tintColor: "#520000"
     },
     addToCartButton: {
-        flex: 1, 
+        flex: 1,
         height: 50,
-        backgroundColor: '#1a1a1a', 
+        backgroundColor: '#1a1a1a',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 4, 
+        borderRadius: 4,
     },
     addToCartText: {
         color: '#fff',
         fontSize: 14,
         fontWeight: '600',
-        letterSpacing: 2, 
+        letterSpacing: 2,
     }
 })
