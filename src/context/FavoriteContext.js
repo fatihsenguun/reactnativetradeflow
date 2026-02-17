@@ -81,4 +81,4 @@ export const FavoritesProvider = ({ children }) => {
     )
 
 }
-export const useFav = useContext(FavoritesContext);
+export const useFav = ()=> useContext(FavoritesContext);

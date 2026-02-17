@@ -1,16 +1,19 @@
-import {AnimationProvider} from './AnimationContext'
+import { AnimationProvider } from './AnimationContext'
 import { AuthProvider } from './AuthProvider'
 import { CartProvider } from './CartContext'
+import { FavoritesProvider } from './FavoriteContext'
 
 
-export const AppProvider = ({children})=>{
+export const AppProvider = ({ children }) => {
 
-    return(
-      <AnimationProvider>
+    return (
+        <AnimationProvider>
             <AuthProvider>
-                <CartProvider>
-                    {children}
-                </CartProvider>
+                <FavoritesProvider>
+                    <CartProvider>
+                        {children}
+                    </CartProvider>
+                </FavoritesProvider>
             </AuthProvider>
         </AnimationProvider>
     )
