@@ -3,10 +3,28 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import heart1 from '../../images/heart1.png'
 import heart from '../../images/heart.png'
+import { useFav } from '../../context/FavoriteContext'
+import { useAuth } from '../../context/AuthProvider'
 
 const ProductBox = ({ product }) => {
-    const [isFav, setIsFav] = useState(false)
+    if (!product) return null;
+
+    const { toggleFavorite, isFavorite } = useFav();
     const navigation = useNavigation()
+    const isFav = isFavorite(product.id);
+    const [procutObj, setProductObj] = useState({});
+    const { user } = useAuth();
+
+
+    const handleFav = async (productId) => {
+        if (!user) {
+            navigation.navigate('SignIn');
+            return;
+        }
+        console.log("productBox", product);
+
+        toggleFavorite(product)
+    }
 
     return (
         <TouchableOpacity
@@ -26,7 +44,7 @@ const ProductBox = ({ product }) => {
                     <Text style={styles.productPrice}>{product.price} TL</Text>
                 </View>
 
-                <TouchableOpacity onPress={() => setIsFav(!isFav)} style={styles.favButton}>
+                <TouchableOpacity onPress={() => handleFav(product.id)} style={styles.favButton}>
                     <Image style={styles.heartIcon} source={isFav ? heart : heart1} />
                 </TouchableOpacity>
             </View>

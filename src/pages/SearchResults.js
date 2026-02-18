@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import ProductBox from '../components/resultsComponents/ProductBox'
 import axios from 'axios';
 import qs from 'qs'
+import { useAuth } from '../context/AuthProvider';
 
 const SearchResults = ({ route }) => {
   const { categories, header } = route.params || {};
-
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     fetchProducts();

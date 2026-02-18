@@ -16,6 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SearchResults from '../pages/SearchResults'
+import { useAuth } from '../context/AuthProvider'
 
 
 
@@ -27,6 +28,7 @@ const Stack = createNativeStackNavigator();
 
 
 const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
+     const { user } = useAuth();
     return (
         <Tab.Navigator screenOptions={{
             tabBarActiveTintColor: "#520000",
@@ -84,6 +86,7 @@ const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
 
                     tabBarActiveTintColor: "#520000"
                 }}
+             
             />
             <Tab.Screen name="CART" component={Cart}
                 options={{
@@ -115,7 +118,6 @@ const Navigator = () => {
         [slideAnim, widthAnim ,opacityAnim]
 
     )
-
     useEffect(() => {
         Animated.timing(opacityAnim, {
             toValue: 1,

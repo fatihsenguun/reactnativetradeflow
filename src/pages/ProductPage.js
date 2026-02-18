@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import heart1 from '../images/heart1.png'
@@ -13,17 +13,20 @@ const ProductPage = ({ route }) => {
     const navigation = useNavigation();
     const { product } = route.params;
     const { user } = useAuth();
-    const { toggleFavorite } = useFav();
-    const [isFav, setIsFav] = useState(false);
+    const { toggleFavorite, isFavorite } = useFav();
 
+    const isFav = isFavorite(product.id);
 
-    const handleFav = async (productId) => {
+    useEffect(() => {
+
+    }, [])
+    const handleFav = async (product) => {
+
         if (!user) {
             navigation.navigate('SignIn');
             return;
         }
-        toggleFavorite(productId)
-
+        toggleFavorite(product)
     }
 
     return (
@@ -58,7 +61,7 @@ const ProductPage = ({ route }) => {
 
                 <TouchableOpacity
                     style={styles.favButton}
-                    onPress={() => handleFav(product.id)}
+                    onPress={() => handleFav(product)}
                 >
                     <Image
                         source={isFav ? heart : heart1}
