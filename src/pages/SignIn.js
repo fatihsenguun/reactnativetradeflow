@@ -28,6 +28,7 @@ const SignIn = () => {
 
         console.log(response.data.data);
         login(response.data.data)
+      navigation.navigate('MainTabs');
 
 
       }
