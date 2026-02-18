@@ -15,7 +15,10 @@ export const FavoritesProvider = ({ children }) => {
 
         if (user && user.accessToken) {
             setAccessToken(user.accessToken)
-            fetchFavoritesFromBackend(user.accessToken);
+           
+                fetchFavoritesFromBackend(user.accessToken);
+         
+
 
         } else {
             setFavorites([]);
@@ -31,7 +34,7 @@ export const FavoritesProvider = ({ children }) => {
 
             setLoading(true);
             const response = await axios.get(url, {
-                headers: { Authorization: `Bearer ${accessToken}` }
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             if (response.data) {

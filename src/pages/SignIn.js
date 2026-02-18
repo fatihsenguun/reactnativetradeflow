@@ -9,7 +9,7 @@ const SignIn = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState();
   const { login,user } = useAuth();
 
   const BASE_URL = 'http://localhost:8080';

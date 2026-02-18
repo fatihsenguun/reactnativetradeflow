@@ -16,11 +16,15 @@ const Favourites = () => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (!user) {
+        navigation.navigate('MainTabs',{screen:'PROFILE'});
+        setTimeout(() => {
         navigation.navigate('SignIn');
+    }, 100);
       }
     });
     return unsubscribe;
   }, [navigation, user]);
+  
   if (loading) {
     return (
       <View style={[styles.mainContainer, styles.centerContainer]}>
@@ -62,6 +66,7 @@ const Favourites = () => {
             </View>
           )}
         />
+        
       )}
     </SafeAreaView>
   )
