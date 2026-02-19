@@ -17,21 +17,15 @@ export const FavoritesProvider = ({ children }) => {
             setAccessToken(user.accessToken)
            
                 fetchFavoritesFromBackend(user.accessToken);
-         
-
-
         } else {
             setFavorites([]);
-
         }
     }, [user,])
-
 
     const fetchFavoritesFromBackend = async (token) => {
         try {
 
             const url = `${BASE_URL}/myfavorites`;
-
             setLoading(true);
             const response = await axios.get(url, {
                 headers: { Authorization: `Bearer ${token}` }

@@ -1,9 +1,11 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useCallback } from 'react'
 import api from '../config/api'
 import PageHeader from '../components/generalComponents/PageHeader'
-import { useFocusEffect } from '@react-navigation/native'
+
 import ProductBox from '../components/resultsComponents/ProductBox'
+import CartProductBox from '../components/generalComponents/CartProductBox'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Cart = () => {
   const [product, setProducts] = useState([]);
@@ -27,29 +29,29 @@ const Cart = () => {
     }
   }
 
-  useEffect(() => {
-    getMyCart();
-  }, [])
-
+useFocusEffect(
+    useCallback(() => {
+      getMyCart();
+    }, [])
+  );
   return (
     <View style={styles.mainContainer}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
         <PageHeader subTitle={""} mainTitle={"CART"} itemLength={product.length} />
         {product.length > 0 ? (
           <View style={styles.container}>
-            
-            {/* SENİN KUSURSUZ ÜRÜN YAPIN - HİÇ DOKUNULMADI */}
+
+
             <View style={styles.row}>
               {product.map((item) => (
-                <ProductBox
-                  key={item.id || item.product.id}
-                  product={item.product}
-                />
+                <View key={item.id} style={{ width: '100%' }}>
+                  <CartProductBox item={item} />
+                </View>
               ))}
             </View>
-            {/* ROW BURADA BİTTİ */}
 
-            {/* FOOTER ROW'UN DIŞINA ÇIKARILDI */}
+
+
             <View style={styles.footer}>
               <View style={styles.divider} />
               <View style={styles.totalRow}>
@@ -65,14 +67,14 @@ const Cart = () => {
 
           </View>
         ) : (
-          /* BOŞ SEPET DURUMU GÜNCELLENDİ */
+
           <View style={styles.noProductContainer}>
             <Text style={styles.messageTitle}>YOUR CART IS EMPTY</Text>
             <Text style={styles.messageDesc}>
               Discover our latest collections and find your next favorite piece.
             </Text>
             <TouchableOpacity style={styles.continueBtn} activeOpacity={0.8}>
-                <Text style={styles.continueBtnText}>CONTINUE SHOPPING</Text>
+              <Text style={styles.continueBtnText}>CONTINUE SHOPPING</Text>
             </TouchableOpacity>
           </View>
         )}

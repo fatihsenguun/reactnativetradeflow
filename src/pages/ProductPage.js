@@ -6,6 +6,7 @@ import heart1 from '../images/heart1.png'
 import heart from '../images/heart.png'
 import { useAuth } from '../context/AuthProvider'
 import { useFav } from '../context/FavoriteContext'
+import api from '../config/api'
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,6 +28,29 @@ const ProductPage = ({ route }) => {
             return;
         }
         toggleFavorite(product)
+    }
+
+    const addToCart = async () => {
+
+        try {
+            const response = await api.post('rest/api/cart/add', {
+                items: [
+                    {
+                        productId: product.id,
+                        quantity: 1
+                    }
+                ]
+
+            })
+            if (response) {
+                console.log(response);
+                console.log("added");
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     return (
@@ -69,7 +93,7 @@ const ProductPage = ({ route }) => {
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.addToCartButton}>
+                <TouchableOpacity onPress={addToCart} style={styles.addToCartButton}>
                     <Text style={styles.addToCartText}>ADD TO CART</Text>
                 </TouchableOpacity>
 
