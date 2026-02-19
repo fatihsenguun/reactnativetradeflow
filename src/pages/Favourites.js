@@ -1,30 +1,30 @@
-import { StyleSheet, Text, View, Platform, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, Platform, ActivityIndicator, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useAuth } from '../context/AuthProvider';
 import { useFav } from '../context/FavoriteContext';
 import ProductBox from '../components/resultsComponents/ProductBox';
+import PageHeader from '../components/generalComponents/PageHeader'
 
 const Favourites = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
 
   const { favorites = [], loading } = useFav();
-  console.log(favorites);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (!user) {
-        navigation.navigate('MainTabs',{screen:'PROFILE'});
+        navigation.navigate('MainTabs', { screen: 'PROFILE' });
         setTimeout(() => {
-        navigation.navigate('SignIn');
-    }, 100);
+          navigation.navigate('SignIn');
+        }, 100);
       }
     });
     return unsubscribe;
   }, [navigation, user]);
-  
+
   if (loading) {
     return (
       <View style={[styles.mainContainer, styles.centerContainer]}>
@@ -34,51 +34,46 @@ const Favourites = () => {
   }
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
-      <View style={styles.headerBox}>
-        <Text style={styles.subTitle}>MEMBERSHIP</Text>
-        <Text style={styles.mainTitle}>WISHLIST</Text>
-        <View style={styles.divider} />
-        <Text style={styles.countText}>{favorites.length} ITEMS</Text>
-      </View>
+      
+        <PageHeader subTitle={'MEMBERSHIP'} mainTitle={'WISHLIST'} itemLenght={3}/>
 
-      {favorites.length === 0 ? (
-        <View style={styles.centerContainer}>
-          <Text style={styles.fadedIcon}>♥</Text>
-          <Text style={styles.messageTitle}>PRIVATE COLLECTION</Text>
-          <Text style={styles.messageDesc}>
-            Save your favorite pieces.
-          </Text>
-        </View>
-      ) : (
-
-        <FlatList
-          data={favorites}
-
-          keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between', paddingHorizontal: 15 }}
-          renderItem={({ item }) => (
-            <View style={{ width: '48%', marginBottom: 15 }}>
-
-              <ProductBox product={item.product} />
+        {favorites.length > 0 ? (
+          <View style={styles.container}>
+            <View style={styles.row}>
+              {favorites.map((item) => (
+                <ProductBox 
+                    key={item.id || item.product.id} 
+                    product={item.product} 
+                />
+              ))}
             </View>
-          )}
-        />
-        
-      )}
-    </SafeAreaView>
+          </View>
+        ) : (
+          <View style={styles.noProductContainer}>
+            <Text style={styles.fadedIcon}>♥</Text>
+            <Text style={styles.messageTitle}>PRIVATE COLLECTION</Text>
+            <Text style={styles.messageDesc}>
+              Save your favorite pieces.
+            </Text>
+          </View>
+        )}
+
+      </ScrollView>
+    </View>
   )
 }
 
 export default Favourites;
 
-// Styles aynı kalabilir...
 const styles = StyleSheet.create({
-  // ... senin styles kodların ...
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FCFCF8',
+  },
+  scroll: {
     backgroundColor: '#FCFCF8',
   },
   headerBox: {
@@ -115,12 +110,31 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: '400',
   },
+  countText: {
+    fontSize: 12,
+    color: '#666',
+    letterSpacing: 1,
+    fontWeight: '400',
+  },
+  container: {
+    marginHorizontal: 10,
+    paddingBottom: 50,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
+  },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 50,
-    paddingBottom: 100,
+  },
+  noProductContainer: {
+    height: 400,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   fadedIcon: {
     fontSize: 50,

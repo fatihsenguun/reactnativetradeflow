@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-
+import {setTokens} from '../config/tokenStorage'
 
 export const AuthContext = createContext()
 
@@ -9,8 +9,11 @@ export const AuthProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(true)
 
-    const login = (userData) => {
+    const login = async(userData) => {
         setUser(userData)
+        await setTokens(userData.accessToken, userData.refreshToken)
+
+
     }
     const logout = () => setUser(null)
 

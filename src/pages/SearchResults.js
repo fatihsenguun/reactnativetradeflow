@@ -4,6 +4,7 @@ import ProductBox from '../components/resultsComponents/ProductBox'
 import axios from 'axios';
 import qs from 'qs'
 import { useAuth } from '../context/AuthProvider';
+import PageHeader from '../components/generalComponents/PageHeader';
 
 const SearchResults = ({ route }) => {
   const { categories, header } = route.params || {};
@@ -54,12 +55,7 @@ const SearchResults = ({ route }) => {
     <View style={styles.mainContainer}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
-        <View style={styles.headerBox}>
-          <Text style={styles.subTitle}>CATALOGUE</Text>
-          <Text style={styles.mainTitle}>{header ? header.toUpperCase() : 'COLLECTION'}</Text>
-          <View style={styles.divider} />
-          <Text style={styles.countText}>{products.length} ITEMS</Text>
-        </View>
+        <PageHeader subTitle={'CATALOGUE'} mainTitle={header ? header.toUpperCase() : 'COLLECTION'} itemLength={products.length} />
 
         {products.length > 0 ? (
           <View style={styles.container}>
