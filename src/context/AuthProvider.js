@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             const response = await api.get(url);
 
             if (response.data) {
-                console.log(response.data);
+
                 setUserInfo(response.data)
                 return(response.data)
             }

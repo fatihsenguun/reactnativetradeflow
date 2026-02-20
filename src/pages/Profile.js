@@ -10,12 +10,12 @@ const Profile = () => {
   const {user, userInfo,fetchUser, logout } = useAuth();
 
 const userBalance = userInfo?.data?.wallet?.balance || 0;
-console.log(userBalance);
+
 
 
 useFocusEffect(
     useCallback(() => {
-      // Eğer kullanıcı giriş yapmışsa, profili ve bakiyeyi arkadan sessizce güncelle
+
       if (user) {
         fetchUser(); 
       }
@@ -51,7 +51,7 @@ useFocusEffect(
               <TouchableOpacity 
                   style={styles.menuItem} 
                   activeOpacity={0.6}
-                  onPress={() => navigation.navigate('MyOrders')} 
+                  onPress={() => navigation.navigate('Orders')} 
               >
                 <Text style={styles.menuItemText}>MY ORDERS</Text>
                 <Text style={styles.menuItemArrow}>›</Text>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 25,
-    paddingBottom: 50, // İçerik scroll edilirken altta boşluk kalsın
+    paddingBottom: 50,
   },
   noUserContainer: {
     justifyContent: 'center',

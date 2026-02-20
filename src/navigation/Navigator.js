@@ -11,6 +11,7 @@ import CartStack from './CartStack'
 import SearchStack from './SearchStack'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
+import Orders from '../pages/Orders'
 import Favourites from '../pages/Favourites'
 import ProductPage from '../pages/ProductPage'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -29,7 +30,7 @@ const Stack = createNativeStackNavigator();
 
 
 const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
-     const { user } = useAuth();
+    const { user } = useAuth();
     return (
         <Tab.Navigator screenOptions={{
             tabBarActiveTintColor: "#520000",
@@ -87,7 +88,7 @@ const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
 
                     tabBarActiveTintColor: "#520000"
                 }}
-             
+
             />
             <Tab.Screen name="CART" component={CartStack}
                 options={{
@@ -114,9 +115,9 @@ const Navigator = () => {
     const widthAnim = useRef(new Animated.Value(400)).current;
     const opacityAnim = useRef(new Animated.Value(0)).current;
 
-    const  TabsComponent = useMemo(
-        ()=>()=><Tabs slideAnim={slideAnim} widthAnim={widthAnim} opacityAnim={opacityAnim}/>,
-        [slideAnim, widthAnim ,opacityAnim]
+    const TabsComponent = useMemo(
+        () => () => <Tabs slideAnim={slideAnim} widthAnim={widthAnim} opacityAnim={opacityAnim} />,
+        [slideAnim, widthAnim, opacityAnim]
 
     )
     useEffect(() => {
@@ -151,12 +152,12 @@ const Navigator = () => {
         return () => clearTimeout(timeout);
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
 
 
 
 
-    },[])
+    }, [])
 
     return (
         <NavigationContainer>
@@ -208,7 +209,7 @@ const Navigator = () => {
                         ),
                     })}
                 />
-                   <Stack.Screen
+                <Stack.Screen
                     name="SignIn"
                     component={SignIn}
 
@@ -219,10 +220,24 @@ const Navigator = () => {
                         headerBackTitle: "",
                         headerBackButtonDisplayMode: "minimal",
                         headerTintColor: "#520000",
-                      
+
                     })}
                 />
-                  <Stack.Screen
+                <Stack.Screen
+                    name="Orders"
+                    component={Orders}
+
+                    options={() => ({
+                        headerShown: true,
+                        title: false,
+                        headerBackTitleVisible: false,
+                        headerBackTitle: "",
+                        headerBackButtonDisplayMode: "minimal",
+                        headerTintColor: "#520000",
+
+                    })}
+                />
+                <Stack.Screen
                     name="SignUp"
                     component={SignUp}
 
@@ -233,7 +248,7 @@ const Navigator = () => {
                         headerBackTitle: "",
                         headerBackButtonDisplayMode: "minimal",
                         headerTintColor: "#520000",
-                      
+
                     })}
                 />
 
