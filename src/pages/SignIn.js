@@ -10,7 +10,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState();
-  const { login,user } = useAuth();
+  const { login, user } = useAuth();
 
   const BASE_URL = 'http://localhost:8080';
 
@@ -27,8 +27,8 @@ const SignIn = () => {
       if (response.data.data) {
 
         console.log(response.data.data);
-        login(response.data.data)
-      navigation.navigate('MainTabs');
+        await login(response.data.data)
+        navigation.navigate('MainTabs');
 
 
       }

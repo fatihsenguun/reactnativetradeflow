@@ -8,6 +8,7 @@ const CartProceed = () => {
     const navigation = useNavigation();
     
     const [cartItems, setCartItems] = useState([]);
+    const [orderItems,setOrderItems] = useState();
     const [totalAmount, setTotalAmount] = useState(0);
     const [address, setAddress] = useState('');
     const [orderNote, setOrderNote] = useState('');
@@ -16,10 +17,12 @@ const CartProceed = () => {
     const getCartSummary = async () => {
         try {
             const response = await api.get('/rest/api/cart');
+            console.log(response);
             if (response.data && response.data.data) {
-                const items = response.data.data.items || [];
-                setCartItems(items);
-                setTotalAmount(items.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0));
+                const items = response.data.data || {};
+                setOrderItems(response.data.data.items);
+                setCartItems(items.items);
+                setTotalAmount(items.items.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0));
             }
         } catch (error) {
             console.log("Özet hatası:", error);
@@ -38,19 +41,28 @@ const CartProceed = () => {
 
         try {
             setIsLoading(true);
-            const response = await api.post('/rest/api/order/create', {
-                deliveryAddress: address,
-                orderNote: orderNote
+            const formattedItems = orderItems.map((item) => ({
+                productId: item.product.id, 
+                quantity: item.quantity    
+            }));
+            console.log(formattedItems);
+            const response = await api.post('/rest/api/order/create',{
+                items: formattedItems
+                
             });
 
             if (response.data) {
                 Alert.alert(
                     "Order Confirmed", 
                     "Thank you for your purchase.",
-                    [{ text: "OK", onPress: () => navigation.navigate('Home') }] 
+                    [{ text: "OK", onPress: () => navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'CartMain' }],
+                            })}] 
                 );
             }
         } catch (error) {
+        
             Alert.alert("Error", "Could not complete the order.");
         } finally {
             setIsLoading(false);
@@ -79,7 +91,7 @@ const CartProceed = () => {
                         ))}
                     </View>
 
-                    {/* -- Form Alanı -- */}
+
                     <Text style={styles.sectionHeader}>DELIVERY</Text>
 
                     <View style={styles.inputWrapper}>
@@ -108,7 +120,7 @@ const CartProceed = () => {
                 </View>
             </ScrollView>
 
-            {/* -- Alt Bar -- */}
+
             <View style={styles.footer}>
                 <View style={styles.totalBlock}>
                     <Text style={styles.totalLabel}>TOTAL</Text>
@@ -147,7 +159,7 @@ const styles = StyleSheet.create({
         paddingBottom: 130, // Footer için
     },
     
-    // -- Özet Alanı --
+
     summaryContainer: {
         marginBottom: 40,
         paddingBottom: 20,
