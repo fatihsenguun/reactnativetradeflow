@@ -7,6 +7,7 @@ import Cart from '../pages/Cart'
 import Profile from '../pages/Profile'
 import Results from '../pages/Results'
 import HomeStack from './HomeStack'
+import CartStack from './CartStack'
 import SearchStack from './SearchStack'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
@@ -88,7 +89,7 @@ const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
                 }}
              
             />
-            <Tab.Screen name="CART" component={Cart}
+            <Tab.Screen name="CART" component={CartStack}
                 options={{
                     headerTitle: "",
                     tabBarIcon: () => null,

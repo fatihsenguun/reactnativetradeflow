@@ -1,13 +1,14 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native'
-import React, { useEffect, useState,useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import api from '../config/api'
 import PageHeader from '../components/generalComponents/PageHeader'
 
 import ProductBox from '../components/resultsComponents/ProductBox'
 import CartProductBox from '../components/generalComponents/CartProductBox'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 const Cart = () => {
+  const navigation = useNavigation();
   const [product, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +30,7 @@ const Cart = () => {
     }
   }
 
-useFocusEffect(
+  useFocusEffect(
     useCallback(() => {
       getMyCart();
     }, [])
@@ -45,7 +46,7 @@ useFocusEffect(
             <View style={styles.row}>
               {product.map((item) => (
                 <View key={item.id} style={{ width: '100%' }}>
-                  <CartProductBox item={item} />
+                  <CartProductBox item={item} onRemove={getMyCart} />
                 </View>
               ))}
             </View>
@@ -60,7 +61,7 @@ useFocusEffect(
                   {product.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0).toLocaleString()} TL
                 </Text>
               </View>
-              <TouchableOpacity style={styles.checkoutBtn} activeOpacity={0.8}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('CartProceed')}} style={styles.checkoutBtn} activeOpacity={0.8}>
                 <Text style={styles.checkoutBtnText}>PROCEED TO CHECKOUT</Text>
               </TouchableOpacity>
             </View>
