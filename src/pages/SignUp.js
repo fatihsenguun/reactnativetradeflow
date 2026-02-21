@@ -1,30 +1,78 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Platform, KeyboardAvoidingView, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import Button from '../components/generalComponents/Button' 
+import Button from '../components/generalComponents/Button'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import api from '../config/api'
+import { useAuth } from '../context/AuthProvider'
+import axios from 'axios'
 
 const SignUp = () => {
   const navigation = useNavigation();
-  
+  const { login, user } = useAuth();
+
 
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUp = () => {
-    console.log("Kayıt olunuyor...", name, surname);
 
-  };
+  const handleSignUp = async () => {
+    if (!name || !surname || !email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    try {
+      const url = 'http://localhost:8080/register';
+
+      setIsLoading(true);
+      const response = await axios.post(url, {
+        firstName: name,
+        lastName: surname,
+        email: email,
+        password: password
+      });
+      if (response.data && response.data.data) {
+
+        console.log("register:", response);
+        await handleSingin();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleSingin = async () => {
+    try {
+      const url = `http://localhost:8080/authenticate`;
+      const response = await axios.post(url, {
+        email: email,
+        password: password
+      });
+
+      if (response.data.data) {
+
+        console.log(response.data.data);
+        await login(response.data.data)
+        navigation.navigate('MainTabs');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          
+
 
           <View style={styles.header}>
             <Text style={styles.title}>JOIN THE CLUB</Text>
@@ -33,30 +81,30 @@ const SignUp = () => {
 
 
           <View style={styles.form}>
-            
+
 
             <View style={styles.row}>
-                <View style={[styles.inputContainer, { flex: 1, marginRight: 10 }]}>
-                    <Text style={styles.label}>FIRST NAME</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={name}
-                        onChangeText={setName}
-                        placeholder="John"
-                        placeholderTextColor="#ccc"
-                    />
-                </View>
+              <View style={[styles.inputContainer, { flex: 1, marginRight: 10 }]}>
+                <Text style={styles.label}>FIRST NAME</Text>
+                <TextInput
+                  style={styles.input}
+                  value={name}
+                  onChangeText={setName}
+                  placeholder="John"
+                  placeholderTextColor="#ccc"
+                />
+              </View>
 
-                <View style={[styles.inputContainer, { flex: 1, marginLeft: 10 }]}>
-                    <Text style={styles.label}>LAST NAME</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={surname}
-                        onChangeText={setSurname}
-                        placeholder="Doe"
-                        placeholderTextColor="#ccc"
-                    />
-                </View>
+              <View style={[styles.inputContainer, { flex: 1, marginLeft: 10 }]}>
+                <Text style={styles.label}>LAST NAME</Text>
+                <TextInput
+                  style={styles.input}
+                  value={surname}
+                  onChangeText={setSurname}
+                  placeholder="Doe"
+                  placeholderTextColor="#ccc"
+                />
+              </View>
             </View>
 
 
@@ -90,10 +138,10 @@ const SignUp = () => {
             <Button text="BECOME A MEMBER" onPress={handleSignUp} />
 
 
-            <TouchableOpacity style={styles.loginLink} onPress={() => navigation.replace('SignIn')}> 
-                <Text style={styles.loginText}>
-                    Already a member? <Text style={{textDecorationLine: 'underline'}}>Sign In</Text>
-                </Text>
+            <TouchableOpacity style={styles.loginLink} onPress={() => navigation.replace('SignIn')}>
+              <Text style={styles.loginText}>
+                Already a member? <Text style={{ textDecorationLine: 'underline' }}>Sign In</Text>
+              </Text>
             </TouchableOpacity>
 
           </View>
@@ -109,7 +157,7 @@ export default SignUp
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCFCF8', 
+    backgroundColor: '#FCFCF8',
   },
   scrollContent: {
     flexGrow: 1,
@@ -143,8 +191,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   inputContainer: {
     marginBottom: 25,
@@ -154,7 +202,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 10,
-    color: '#520000', 
+    color: '#520000',
     letterSpacing: 1.5,
     marginBottom: 10,
     fontWeight: '600',
@@ -168,12 +216,12 @@ const styles = StyleSheet.create({
 
 
   loginLink: {
-      alignItems: 'center',
-      marginTop: 10
+    alignItems: 'center',
+    marginTop: 10
   },
   loginText: {
-      fontSize: 12,
-      color: '#555',
-      fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
+    fontSize: 12,
+    color: '#555',
+    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
   },
 })

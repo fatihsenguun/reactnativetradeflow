@@ -6,9 +6,9 @@ import PageHeader from '../components/generalComponents/PageHeader'
 
 const CartProceed = () => {
     const navigation = useNavigation();
-    
+
     const [cartItems, setCartItems] = useState([]);
-    const [orderItems,setOrderItems] = useState();
+    const [orderItems, setOrderItems] = useState();
     const [totalAmount, setTotalAmount] = useState(0);
     const [address, setAddress] = useState('');
     const [orderNote, setOrderNote] = useState('');
@@ -42,27 +42,30 @@ const CartProceed = () => {
         try {
             setIsLoading(true);
             const formattedItems = orderItems.map((item) => ({
-                productId: item.product.id, 
-                quantity: item.quantity    
+                productId: item.product.id,
+                quantity: item.quantity
             }));
             console.log(formattedItems);
-            const response = await api.post('/rest/api/order/create',{
-                items: formattedItems
-                
+            const response = await api.post('/rest/api/order/create', {
+                items: formattedItems,
+                address: address
+
             });
 
             if (response.data) {
                 Alert.alert(
-                    "Order Confirmed", 
+                    "Order Confirmed",
                     "Thank you for your purchase.",
-                    [{ text: "OK", onPress: () => navigation.reset({
-                                index: 0,
-                                routes: [{ name: 'CartMain' }],
-                            })}] 
+                    [{
+                        text: "OK", onPress: () => navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'CartMain' }],
+                        })
+                    }]
                 );
             }
         } catch (error) {
-        
+console.log(error);
             Alert.alert("Error", "Could not complete the order.");
         } finally {
             setIsLoading(false);
@@ -72,11 +75,11 @@ const CartProceed = () => {
     return (
         <View style={styles.mainContainer}>
             <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-                
+
                 <PageHeader subTitle={"REVIEW"} mainTitle={"CHECKOUT"} />
 
                 <View style={styles.formContainer}>
-                    
+
                     {/* -- Özet -- */}
                     <View style={styles.summaryContainer}>
                         {cartItems.map((item) => (
@@ -126,9 +129,9 @@ const CartProceed = () => {
                     <Text style={styles.totalLabel}>TOTAL</Text>
                     <Text style={styles.totalPrice}>{totalAmount.toLocaleString()} TL</Text>
                 </View>
-                
-                <TouchableOpacity 
-                    style={styles.payBtn} 
+
+                <TouchableOpacity
+                    style={styles.payBtn}
                     activeOpacity={0.9}
                     onPress={handleCompleteOrder}
                     disabled={isLoading || cartItems.length === 0}
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         paddingBottom: 130, // Footer için
     },
-    
+
 
     summaryContainer: {
         marginBottom: 40,
