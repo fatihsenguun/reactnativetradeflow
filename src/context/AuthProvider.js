@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import { setTokens, getTokens } from '../config/tokenStorage'
+import { setTokens, getTokens,clearTokens } from '../config/tokenStorage'
 import api from "../config/api"
+
 
 
 export const AuthContext = createContext()
@@ -61,7 +62,12 @@ export const AuthProvider = ({ children }) => {
         await fetchUser()
 
     }
-    const logout = () => setUser(null)
+    const logout = () => {
+
+        setUser(null)
+        setUserInfo(null)
+        clearTokens();
+    }
 
     return (
         <AuthContext.Provider value={{ user, isLoading,userInfo, fetchUser, setIsLoading, login, logout }}>

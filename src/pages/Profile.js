@@ -23,7 +23,7 @@ useFocusEffect(
   );
 
 
-  if (user) {
+  if (user&&userInfo) {
     return (
       <View style={styles.mainContainer}>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>

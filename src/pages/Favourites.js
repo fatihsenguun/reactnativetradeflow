@@ -9,13 +9,13 @@ import PageHeader from '../components/generalComponents/PageHeader'
 
 const Favourites = () => {
   const navigation = useNavigation();
-  const { user } = useAuth();
+  const { user,userInfo } = useAuth();
 
   const { favorites = [], loading } = useFav();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      if (!user) {
+      if (!userInfo) {
         navigation.navigate('MainTabs', { screen: 'PROFILE' });
         setTimeout(() => {
           navigation.navigate('SignIn');

@@ -13,11 +13,11 @@ const ProductBox = ({ product }) => {
     const navigation = useNavigation()
     const isFav = isFavorite(product.id);
     const [procutObj, setProductObj] = useState({});
-    const { user } = useAuth();
+    const { userInfo } = useAuth();
 
 
     const handleFav = async (productId) => {
-        if (!user) {
+        if (!userInfo) {
             navigation.navigate('SignIn');
             return;
         }

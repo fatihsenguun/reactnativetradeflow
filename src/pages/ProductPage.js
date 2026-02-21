@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 import heart1 from '../images/heart1.png'
 import heart from '../images/heart.png'
 import { useAuth } from '../context/AuthProvider'
-import { useFav, addToCart } from '../context/FavoriteContext'
+import { useFav } from '../context/FavoriteContext'
+import { useCart } from '../context/CartContext'
 import api from '../config/api'
 
 const { width, height } = Dimensions.get('window');
@@ -14,6 +15,7 @@ const ProductPage = ({ route }) => {
     const navigation = useNavigation();
     const { product } = route.params;
     const { user } = useAuth();
+    const {addToCart} = useCart();
     const { toggleFavorite, isFavorite } = useFav();
 
     const isFav = isFavorite(product.id);
@@ -23,7 +25,7 @@ const ProductPage = ({ route }) => {
     }, [])
     const handleFav = async (product) => {
 
-        if (!user) {
+        if (!userInfo) {
             navigation.navigate('SignIn');
             return;
         }
@@ -71,7 +73,7 @@ const ProductPage = ({ route }) => {
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={addToCart(product)} style={styles.addToCartButton}>
+                <TouchableOpacity onPress={()=>{addToCart(product)}} style={styles.addToCartButton}>
                     <Text style={styles.addToCartText}>ADD TO CART</Text>
                 </TouchableOpacity>
 

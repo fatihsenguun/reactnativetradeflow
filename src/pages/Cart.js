@@ -20,10 +20,12 @@ const Cart = () => {
       const response = await api.get(url);
 
       if (response.data && response.data.data) {
-        console.log(response.data.data.items);
+
         setProducts(response.data.data.items);
+        console.log(response.data.data);
       }
     } catch (error) {
+      setProducts([])
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -45,7 +47,7 @@ const Cart = () => {
 
             <View style={styles.row}>
               {product.map((item) => (
-                <View key={item.id} style={{ width: '100%' }}>
+                <View key={item.product.id} style={{ width: '100%' }}>
                   <CartProductBox item={item} onRemove={getMyCart} />
                 </View>
               ))}
@@ -61,7 +63,7 @@ const Cart = () => {
                   {product.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0).toLocaleString()} TL
                 </Text>
               </View>
-              <TouchableOpacity onPress={()=>{navigation.navigate('CartProceed')}} style={styles.checkoutBtn} activeOpacity={0.8}>
+              <TouchableOpacity onPress={() => { navigation.navigate('CartProceed') }} style={styles.checkoutBtn} activeOpacity={0.8}>
                 <Text style={styles.checkoutBtnText}>PROCEED TO CHECKOUT</Text>
               </TouchableOpacity>
             </View>
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: 20,
-    width: '100%', // Footer'ın ekranı kaplaması için eklendi
+    width: '100%',
   },
   divider: {
     height: 1,

@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "../config/api";
 import { useAuth } from "./AuthProvider";
+
 
 export const CartContext = createContext()
 
@@ -60,7 +61,6 @@ export const CartProvider = ({ children }) => {
 
 
     const removeFromCart = (productId) => setCartItems(cartItems.filter(i => i.id !== productId));
-
     return (
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, setCartItems }}>
             {children}
@@ -69,3 +69,4 @@ export const CartProvider = ({ children }) => {
     )
 
 }
+export const useCart = () => useContext(CartContext);
