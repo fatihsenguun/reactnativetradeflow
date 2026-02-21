@@ -6,6 +6,7 @@ import CartProceed from '../pages/CartProceed';
 
 
 function CartStack() {
+    
     const Tab = createBottomTabNavigator();
     const Stack = createNativeStackNavigator();
     return (

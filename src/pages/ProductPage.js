@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import heart1 from '../images/heart1.png'
 import heart from '../images/heart.png'
 import { useAuth } from '../context/AuthProvider'
-import { useFav } from '../context/FavoriteContext'
+import { useFav, addToCart } from '../context/FavoriteContext'
 import api from '../config/api'
 
 const { width, height } = Dimensions.get('window');
@@ -30,28 +30,6 @@ const ProductPage = ({ route }) => {
         toggleFavorite(product)
     }
 
-    const addToCart = async () => {
-
-        try {
-            const response = await api.post('rest/api/cart/add', {
-                items: [
-                    {
-                        productId: product.id,
-                        quantity: 1
-                    }
-                ]
-
-            })
-            if (response) {
-                console.log(response);
-                console.log("added");
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
 
     return (
         <View style={styles.container}>
@@ -93,7 +71,7 @@ const ProductPage = ({ route }) => {
                     />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={addToCart} style={styles.addToCartButton}>
+                <TouchableOpacity onPress={addToCart(product)} style={styles.addToCartButton}>
                     <Text style={styles.addToCartText}>ADD TO CART</Text>
                 </TouchableOpacity>
 
