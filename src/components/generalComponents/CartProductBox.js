@@ -17,7 +17,6 @@ const CartProductBox = ({ item, onRemove }) => {
                     quantity: quantity 
                 }
             });
-
             if (onRemove) {
                 onRemove();
             }
