@@ -65,7 +65,7 @@ const CartProceed = () => {
                 );
             }
         } catch (error) {
-console.log(error);
+            console.log(error);
             Alert.alert("Error", "Could not complete the order.");
         } finally {
             setIsLoading(false);
@@ -80,10 +80,10 @@ console.log(error);
 
                 <View style={styles.formContainer}>
 
-                    {/* -- Özet -- */}
+          
                     <View style={styles.summaryContainer}>
                         {cartItems.map((item) => (
-                            <View key={item.id} style={styles.itemRow}>
+                            <View key={item.product.id} style={styles.itemRow}>
                                 <Text style={styles.itemName} numberOfLines={1}>
                                     {item.quantity}x {item.product.name.toUpperCase()}
                                 </Text>

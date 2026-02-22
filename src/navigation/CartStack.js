@@ -12,7 +12,7 @@ function CartStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="CartMain" component={Cart} />
-            <Stack.Screen name="CartProceed" component={CartProceed} />
+        
 
         </Stack.Navigator>
     )

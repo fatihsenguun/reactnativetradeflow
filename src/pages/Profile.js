@@ -41,7 +41,7 @@ useFocusEffect(
               <Text style={styles.balanceAmount}>
                   {userBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })} TL
               </Text>
-              <TouchableOpacity style={styles.addFundsBtn} activeOpacity={0.7}>
+              <TouchableOpacity onPress={()=>navigation.navigate('AddFunds')} style={styles.addFundsBtn} activeOpacity={0.7}>
                 <Text style={styles.addFundsText}>+ ADD FUNDS</Text>
               </TouchableOpacity>
             </View>

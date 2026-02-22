@@ -9,6 +9,7 @@ export const CartProvider = ({ children }) => {
     const { user } = useAuth();
     const [cartItems, setCartItems] = useState([])
     const [products, setProducts] = useState([]);
+    const [productsCount, setProductsCount] = useState(0)
     const [isLoading, setIsLoading] = useState();
 
     useEffect(() => {
@@ -28,8 +29,9 @@ export const CartProvider = ({ children }) => {
             const response = await api.get(url);
 
             if (response.data && response.data.data) {
-              setProducts(response.data.data.items);
-               console.log("response", response.data.data.items);
+                setProducts(response.data.data.items);
+                setProductsCount(response.data.data.items.length)
+                console.log("response", response.data.data.items);
             }
         } catch (error) {
             console.log(error);
@@ -62,7 +64,7 @@ export const CartProvider = ({ children }) => {
 
     const removeFromCart = (productId) => setCartItems(cartItems.filter(i => i.id !== productId));
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, setCartItems }}>
+        <CartContext.Provider value={{products, cartItems, productsCount, addToCart, getMyCart, removeFromCart, setCartItems }}>
             {children}
         </CartContext.Provider>
 

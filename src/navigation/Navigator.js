@@ -19,6 +19,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SearchResults from '../pages/SearchResults'
 import { useAuth } from '../context/AuthProvider'
+import { useCart } from '../context/CartContext'
+import CartProceed from '../pages/CartProceed'
+import AddFunds from '../pages/AddFunds'
 
 
 
@@ -31,6 +34,7 @@ const Stack = createNativeStackNavigator();
 
 const Tabs = ({ slideAnim, widthAnim, opacityAnim }) => {
     const { user } = useAuth();
+
     return (
         <Tab.Navigator screenOptions={{
             tabBarActiveTintColor: "#520000",
@@ -114,7 +118,7 @@ const Navigator = () => {
     const slideAnim = useRef(new Animated.ValueXY({ x: (width / 2) - 200, y: (height / 2) - 50 })).current;
     const widthAnim = useRef(new Animated.Value(400)).current;
     const opacityAnim = useRef(new Animated.Value(0)).current;
-
+    const { productsCount } = useCart();
     const TabsComponent = useMemo(
         () => () => <Tabs slideAnim={slideAnim} widthAnim={widthAnim} opacityAnim={opacityAnim} />,
         [slideAnim, widthAnim, opacityAnim]
@@ -162,7 +166,16 @@ const Navigator = () => {
     return (
         <NavigationContainer>
 
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{
+                headerShown: true,
+                title: false,
+                headerBackTitleVisible: false,
+                headerBackTitle: "",
+                headerBackButtonDisplayMode: "minimal",
+                headerTintColor: "#520000",
+                headerShadowVisible: false,
+            }}>
+
 
                 <Stack.Screen
                     name="MainTabs"
@@ -170,21 +183,19 @@ const Navigator = () => {
                     options={{ headerShown: false }}
                 />
 
+
+
+
                 <Stack.Screen
                     name="SearchResults"
                     component={SearchResults}
-
                     options={({ navigation }) => ({
-                        headerShown: true,
-                        title: false,
-                        headerBackTitleVisible: false,
-                        headerBackTitle: "",
-                        headerBackButtonDisplayMode: "minimal",
-
-                        headerTintColor: "#520000",
                         headerRight: () => (
                             <TouchableOpacity onPress={() => navigation.navigate('MainTabs', { screen: 'CART' })}>
                                 <Image style={styles.basket} source={require('../images/shopping-bag.png')} />
+                                {productsCount > 0 && (
+                                    <Text style={styles.badge}>{productsCount}</Text>
+                                )}
                             </TouchableOpacity>
                         ),
                     })}
@@ -193,64 +204,24 @@ const Navigator = () => {
                 <Stack.Screen
                     name="ProductPage"
                     component={ProductPage}
-
                     options={({ navigation }) => ({
-                        headerShown: true,
-                        title: false,
-                        headerBackTitleVisible: false,
-                        headerBackTitle: "",
-                        headerBackButtonDisplayMode: "minimal",
-
-                        headerTintColor: "#520000",
                         headerRight: () => (
                             <TouchableOpacity onPress={() => navigation.navigate('MainTabs', { screen: 'CART' })}>
                                 <Image style={styles.basket} source={require('../images/shopping-bag.png')} />
+                                {productsCount > 0 && (
+                                    <Text style={styles.badge}>{productsCount}</Text>
+                                )}
                             </TouchableOpacity>
                         ),
                     })}
                 />
-                <Stack.Screen
-                    name="SignIn"
-                    component={SignIn}
 
-                    options={() => ({
-                        headerShown: true,
-                        title: false,
-                        headerBackTitleVisible: false,
-                        headerBackTitle: "",
-                        headerBackButtonDisplayMode: "minimal",
-                        headerTintColor: "#520000",
 
-                    })}
-                />
-                <Stack.Screen
-                    name="Orders"
-                    component={Orders}
-
-                    options={() => ({
-                        headerShown: true,
-                        title: false,
-                        headerBackTitleVisible: false,
-                        headerBackTitle: "",
-                        headerBackButtonDisplayMode: "minimal",
-                        headerTintColor: "#520000",
-
-                    })}
-                />
-                <Stack.Screen
-                    name="SignUp"
-                    component={SignUp}
-
-                    options={() => ({
-                        headerShown: true,
-                        title: false,
-                        headerBackTitleVisible: false,
-                        headerBackTitle: "",
-                        headerBackButtonDisplayMode: "minimal",
-                        headerTintColor: "#520000",
-
-                    })}
-                />
+                <Stack.Screen name="CartProceed" component={CartProceed} />
+                <Stack.Screen name="SignIn" component={SignIn} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="Orders" component={Orders} />
+                <Stack.Screen name="AddFunds" component={AddFunds} />
 
             </Stack.Navigator>
         </NavigationContainer>
@@ -267,5 +238,17 @@ const styles = StyleSheet.create({
     heart: {
         width: 20,
         height: 20
+    },
+    badge: {
+        position: 'absolute',
+        backgroundColor: '#520000',
+        width: 18,
+        height: 18,
+        color: 'white',
+        textAlign: 'center',
+        borderRadius: 30,
+        fontWeight: '700',
+        bottom: -7,
+        right: 12
     }
 })

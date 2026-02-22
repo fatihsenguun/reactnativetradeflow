@@ -6,31 +6,12 @@ import PageHeader from '../components/generalComponents/PageHeader'
 import ProductBox from '../components/resultsComponents/ProductBox'
 import CartProductBox from '../components/generalComponents/CartProductBox'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useCart } from '../context/CartContext'
 
 const Cart = () => {
   const navigation = useNavigation();
-  const [product, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const getMyCart = async () => {
-    try {
-      const url = '/rest/api/cart';
-
-      setIsLoading(true);
-      const response = await api.get(url);
-
-      if (response.data && response.data.data) {
-
-        setProducts(response.data.data.items);
-        console.log(response.data.data);
-      }
-    } catch (error) {
-      setProducts([])
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const {products, getMyCart} = useCart();
 
   useFocusEffect(
     useCallback(() => {
@@ -40,13 +21,13 @@ const Cart = () => {
   return (
     <View style={styles.mainContainer}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
-        <PageHeader subTitle={""} mainTitle={"CART"} itemLength={product.length} />
-        {product.length > 0 ? (
+        <PageHeader subTitle={""} mainTitle={"CART"} itemLength={products.length} />
+        {products.length > 0 ? (
           <View style={styles.container}>
 
 
             <View style={styles.row}>
-              {product.map((item) => (
+              {products.map((item) => (
                 <View key={item.product.id} style={{ width: '100%' }}>
                   <CartProductBox item={item} onRemove={getMyCart} />
                 </View>
@@ -60,7 +41,7 @@ const Cart = () => {
               <View style={styles.totalRow}>
                 <Text style={styles.totalLabel}>TOTAL</Text>
                 <Text style={styles.totalAmount}>
-                  {product.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0).toLocaleString()} TL
+                  {products.reduce((acc, curr) => acc + (curr.product.price * curr.quantity), 0).toLocaleString()} TL
                 </Text>
               </View>
               <TouchableOpacity onPress={() => { navigation.navigate('CartProceed') }} style={styles.checkoutBtn} activeOpacity={0.8}>
